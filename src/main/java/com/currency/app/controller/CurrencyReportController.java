@@ -1,5 +1,6 @@
 package com.currency.app.controller;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -42,6 +43,8 @@ public class CurrencyReportController {
 	
 	@PostMapping("/currencyreport")
 	public String showCurrencyReport(@ModelAttribute @Valid CurrencyForm currencyForm, BindingResult result, RedirectAttributes model) {
+		validateStartAndEndDate(currencyForm, result);
+		
 		if (result.hasErrors()) {
 			return "currencyreport";
 		}
@@ -52,5 +55,16 @@ public class CurrencyReportController {
 		model.addFlashAttribute("targetCurrency", currencyForm.getTargetCurrency());
 		
 		return "redirect:/currencyreport";
+	}
+	
+	private void validateStartAndEndDate(CurrencyForm currencyForm, BindingResult result) {
+		LocalDate startDate = currencyForm.getStartDate();
+		LocalDate endDate = currencyForm.getEndDate();
+		
+		if (startDate != null && endDate != null) {
+			if (startDate.isAfter(endDate)) {
+				result.reject("currency.form.date.mismatch");
+			}
+		}
 	}
 }
