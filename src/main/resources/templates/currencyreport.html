@@ -46,6 +46,11 @@
 					<p th:each="err : ${#fields.errors('endDate')}" th:text="${err}">Error message</p>
 				</div>
 			</div>
+			<div class="form-row error" th:if="${#fields.hasGlobalErrors()}">
+				<div class="error">
+					<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">Error message</p>
+				</div>
+			</div>
 			<div class="form-row">
 				<button class="submit-btn" type="submit" th:text="#{currency.form.submit}">Submit</button>
 			</div>
