@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Currency report</title>
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap&subset=latin-ext" rel="stylesheet">
+	<link rel="stylesheet" href="/css/main.css" th:href="@{/css/main.css}">
+  </head>
+</head>
+<body>
+	<div class="container">
+		<form class="currency-form" action="#" th:action="@{/currencyreport}" th:object="${currencyForm}" method="post">
+			<div class="form-row">
+				<label for="baseCurrency" th:text="#{currency.form.baseCurrency}">Base currency:</label>
+				<select th:field="*{baseCurrency}" th:errorclass="error">
+					<option value="" th:text="#{currency.form.baseCurrency.option}">-- Choose base currency --</option>
+					<option th:each="currency : ${allCurrencies}" th:value="${currency}" th:text="${currency}">EUR</option>
+				</select>
+				<div class="error" th:if="${#fields.hasErrors('baseCurrency')}">
+					<p th:each="err : ${#fields.errors('baseCurrency')}" th:text="${err}">Error message</p>
+				</div>
+			</div>
+			<div class="form-row">
+				<label for="targetCurrency" th:text="#{currency.form.targetCurrency}">Target currency:</label>
+				<select th:field="*{targetCurrency}" th:errorclass="error">
+					<option value="" th:text="#{currency.form.targetCurrency.option}">-- Choose target currency --</option>
+					<option th:each="currency : ${allCurrencies}" th:value="${currency}" th:text="${currency}">EUR</option>
+				</select>
+				<div class="error" th:if="${#fields.hasErrors('targetCurrency')}">
+					<p th:each="err : ${#fields.errors('targetCurrency')}" th:text="${err}">Error message</p>
+				</div>
+			</div>
+			<div class="form-row">
+				<label for="startDate" th:text="#{currency.form.startDate}">Start date:</label>
+				<input type="text" th:field="*{startDate}" th:placeholder="#{currency.form.dateFormat}" th:errorclass="error">
+				<div class="error" th:if="${#fields.hasErrors('startDate')}">
+					<p th:each="err : ${#fields.errors('startDate')}" th:text="${err}">Error message</p>
+				</div>
+			</div>
+			<div class="form-row">
+				<label for="endDate" th:text="#{currency.form.endDate}">End date:</label>
+				<input type="text" th:field="*{endDate}" th:placeholder="#{currency.form.dateFormat}" th:errorclass="error">
+				<div class="error" th:if="${#fields.hasErrors('endDate')}">
+					<p th:each="err : ${#fields.errors('endDate')}" th:text="${err}">Error message</p>
+				</div>
+			</div>
+			<div class="form-row">
+				<button class="submit-btn" type="submit" th:text="#{currency.form.submit}">Submit</button>
+			</div>
+		</form>
+		<div class="currency-report" th:if="${currencyReport != null}">
+			<h2 class="currency-report-header" th:text="#{currency.report.header(${baseCurrency}, ${targetCurrency})}">Currency exchange rates</h2>
+			<table>
+				<thead>
+					<tr>
+						<th th:text="#{currency.report.date}">Date</th>
+						<th th:text="#{currency.report.value}">Currency value</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="report : ${currencyReport}">
+						<td th:text="${{report.date}}">2015-01-01</td>
+						<td th:text="${report.value}">5.4326</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>
