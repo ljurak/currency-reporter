@@ -1,19 +1,19 @@
 package com.currency.app.form;
 
 public enum Currency {
-	EUR,
-	USD,
-	CHF,
-	GBP,
-	PLN,
-	JPY,
-	NOK,
-	SEK,
-	CAD,
-	RUB,
 	AUD,
 	BRL,
+	CAD,
+	CHF,
 	CNY,
 	CZK,
-	DKK
+	DKK,
+	EUR,
+	GBP,
+	JPY,
+	NOK,
+	PLN,
+	RUB,
+	SEK,
+	USD
 }
