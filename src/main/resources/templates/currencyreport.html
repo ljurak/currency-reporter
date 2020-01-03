@@ -5,11 +5,13 @@
 	<title>Currency report</title>
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap&subset=latin-ext" rel="stylesheet">
 	<link rel="stylesheet" href="/css/main.css" th:href="@{/css/main.css}">
+	<link rel="stylesheet" href="/css/foopicker.css" th:href="@{/css/foopicker.css}">
   </head>
 </head>
 <body>
 	<div class="container">
 		<form class="currency-form" action="#" th:action="@{/currencyreport}" th:object="${currencyForm}" method="post">
+			<h2 class="currency-form-header" th:text="#{currency.form.header}">Complete the form to get exchange rates</h2>
 			<div class="form-row">
 				<label for="baseCurrency" th:text="#{currency.form.baseCurrency}">Base currency:</label>
 				<select th:field="*{baseCurrency}" th:errorclass="error">
@@ -32,14 +34,14 @@
 			</div>
 			<div class="form-row">
 				<label for="startDate" th:text="#{currency.form.startDate}">Start date:</label>
-				<input type="text" th:field="*{startDate}" th:placeholder="#{currency.form.dateFormat}" th:errorclass="error">
+				<input type="text" th:field="*{startDate}" th:placeholder="#{currency.form.dateFormat}" th:errorclass="error" autocomplete="off">
 				<div class="error" th:if="${#fields.hasErrors('startDate')}">
 					<p th:each="err : ${#fields.errors('startDate')}" th:text="${err}">Error message</p>
 				</div>
 			</div>
 			<div class="form-row">
 				<label for="endDate" th:text="#{currency.form.endDate}">End date:</label>
-				<input type="text" th:field="*{endDate}" th:placeholder="#{currency.form.dateFormat}" th:errorclass="error">
+				<input type="text" th:field="*{endDate}" th:placeholder="#{currency.form.dateFormat}" th:errorclass="error" autocomplete="off">
 				<div class="error" th:if="${#fields.hasErrors('endDate')}">
 					<p th:each="err : ${#fields.errors('endDate')}" th:text="${err}">Error message</p>
 				</div>
@@ -66,5 +68,17 @@
 			</table>
 		</div>
 	</div>
+	<script type="text/javascript" src="/js/foopicker.js" th:src="@{/js/foopicker.js}"></script>
+	<script>
+		const startDate = new FooPicker({
+			id: 'startDate',
+			dateFormat: 'yyyy-MM-dd'
+		});
+		
+		const endDate = new FooPicker({
+			id: 'endDate',
+			dateFormat: 'yyyy-MM-dd'
+		});
+	</script>
 </body>
 </html>
