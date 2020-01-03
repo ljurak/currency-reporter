@@ -54,6 +54,10 @@ body {
 	border-color: #f00;
 }
 
+.currency-form .form-row.error {
+	margin-top: -16px;
+}
+
 .currency-form .form-row div.error {
 	width: 100%;
 	padding-left: 150px;
